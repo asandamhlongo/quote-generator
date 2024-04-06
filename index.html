@@ -6,15 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Random quote generator </title>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="quote-box">
         <h2>Quote of the day</h2>
-        <blockquote>Loading...</blockquote>
-        <span>Loading..</span>
-        
-            <button>New quote</button>
-    
+        <blockquote class="quote">Loading...</blockquote>
+        <span class="author">Kanye West</span>
+            <button id="btn" onclick="getQuote(apiUrl)">New quote</button>
     </div>
+
+    <script>
+        const quote = document.querySelector(".quote");
+            const author = document.querySelector(".author");
+            const btn = document.querySelector("#btn");
+            const apiUrl = "https://api.kanye.rest";
+
+            const getQuote = () => {
+                fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        quote.textContent = data.quote;
+                    
+                    })
+                    .catch((error) => {
+                        console.log("Error fetching quote:", error);
+                    });
+            };
+
+            window.addEventListener("load", getQuote);
+            btn.addEventListener("click", getQuote);
+    </script>
 </body>
